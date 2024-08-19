@@ -17,11 +17,16 @@ object RandomGenerate {
     ('0' to '9').toArray
   }
 
-  def genCharacters(addUp: Boolean, addLc: Boolean, addNum: Boolean): Array[Char] = {
+  def randomSpecials(): Array[Char] = {
+    List('!', '@', '#', '$', '%', '^', '*').toArray
+  }
+
+  def genCharacters(addUp: Boolean, addLc: Boolean, addNum: Boolean, addSp: Boolean): Array[Char] = {
     val chars = scala.collection.mutable.ArrayBuffer[Char]()
     if (addUp) chars ++= randomUpLetters()
     if (addLc) chars ++= randomLcLetters()
     if (addNum) chars ++= randomNumbers()
+    if (addSp) chars ++= randomSpecials()
     chars.toArray
   }
 
@@ -51,6 +56,9 @@ object RandomGenerate {
 
     print("Deseja incluir números? (s/n): ")
     val includeNum = readLine().trim.toLowerCase == "s"
+    
+    print("Deseja incluir caracteres especiais? (s/n): ")
+    val includeSp = readLine().trim.toLowerCase == "s"
 
     print("Digite a quantidade que deseja gerar: ")
     val input = readLine()
@@ -58,7 +66,7 @@ object RandomGenerate {
 
     try {
       val count = input.toInt
-      val characters = genCharacters(includeUp, includeLc, includeNum)
+      val characters = genCharacters(includeUp, includeLc, includeNum, includeSp)
       randomCharacters(count, characters)
     } catch {
       case e: NumberFormatException =>
